@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isShow" class="changeScore">
+  <div v-if="isShow" class="changeScore" :style="potition">
     <img src="../../assets/img/UI/arrow.png" alt="arrow">
     <div class="changeScore__control">
       <input type="number" class="form-control" placeholder="Score">
@@ -14,6 +14,10 @@
 export default {
   props: {
     isShow: Boolean,
+    potition: {
+      type: String,
+      default: 'bottom: -6.5rem !important',
+    },
   },
 };
 </script>
@@ -22,7 +26,7 @@ export default {
 
   .changeScore{
     position: absolute;
-    bottom: -6.5rem;
+    // bottom: -6.5rem;
     left: -8px;
     background-color: #fff;
     @include boxShadow(.4);
@@ -33,8 +37,12 @@ export default {
     img{
       position: absolute;
       top: -10px;
-      left: 2.7rem;
+      left: 3rem;
       height: 1rem;
+    }
+
+    &__control{
+      text-align: center;
     }
   }
 </style>
