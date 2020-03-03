@@ -5,7 +5,10 @@
     <div class="challenger__info">
       <h2 @click="showModal = !showModal"> {{challenger.point}} </h2>
       <h3> {{challenger.username}} </h3>
-      <change-score-tooltip :isShow="showModal" :position="'bottom: -7.2rem !important'" />
+      <change-score-tooltip
+        :isShow="showModal"
+        :position="'bottom: -7.2rem !important'"
+        :name="challenger.username"/>
     </div>
   </figure>
 </template>
@@ -28,7 +31,7 @@ export default {
       return this.$store.state.challenger;
     },
     imgChoose() {
-      return imgChoose.avaChoose(this.challenger.imgChoose);
+      return imgChoose.avaChoose(this.challenger.img);
     },
   },
 };

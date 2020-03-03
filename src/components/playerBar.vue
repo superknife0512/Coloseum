@@ -6,7 +6,8 @@
         :key="player.username"
         :name="player.username"
         :img="player.img"
-        :point="player.point" />
+        :point="player.point"
+        @changeChallenger="onChangeChallenger($event)" />
       <challenge-player-avatar></challenge-player-avatar>
     </div>
   </div>
@@ -23,6 +24,12 @@ export default {
   computed: {
     normalPlayers() {
       return this.$store.state.normalPlayer;
+    },
+  },
+  methods: {
+    onChangeChallenger(playerName) {
+      console.log(playerName);
+      this.$store.commit('changeChallenger', playerName);
     },
   },
 };

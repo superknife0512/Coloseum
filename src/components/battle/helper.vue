@@ -1,18 +1,34 @@
 <template>
   <figure class="helper"
-          @click="isChoose = !isChoose"
-          :class="{'helper__active': isChoose}">
-    <img src="../../assets/img/helpers/link.png" alt="link">
-    <h5> -10 </h5>
+          @click="chooseHelper()"
+          :class="{'helper__active': helperPower.isOn}">
+    <img :src="helperImg" :alt="helperImg">
+    <h5> -{{ helperPower.point }} </h5>
   </figure>
 </template>
 
 <script>
+import imgChoose from '../util/imgChoose';
+
 export default {
+  props: {
+    helperPower: Object,
+    img: String,
+  },
   data() {
     return {
-      isChoose: false,
+      // isChoose: false,
     };
+  },
+  computed: {
+    helperImg() {
+      return imgChoose.helperImgChoose(this.img);
+    },
+  },
+  methods: {
+    chooseHelper() {
+      this.$emit('chooseHelper');
+    },
   },
 };
 </script>
@@ -31,7 +47,7 @@ export default {
     position: relative;
 
     &:not(:last-child) {
-      margin-right: 1.7rem;
+      margin-right: 1.9rem;
     }
     &:hover{
       transform: scale(1.1) translateY(-.5rem);

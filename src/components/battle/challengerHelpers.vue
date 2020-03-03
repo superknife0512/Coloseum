@@ -1,21 +1,66 @@
 <template>
   <div class="helpers">
-    <challenger-helper v-for="i in 4" :key="i" />
+    <challenger-helper
+      v-for="(objValue, key, index) in power"
+      :key="index"
+      :img="key"
+      :helperPower="objValue"
+      @chooseHelper="chooseHelper(key)"
+      />
   </div>
 </template>
 <script>
 import challengerHelper from './helper';
+import eventBus from '../util/bus';
 
 export default {
+  created() {
+    this.initPower();
+  },
+  mounted() {
+    eventBus.$on('initPower', () => {
+      this.initPower();
+    });
+  },
+  data() {
+    return {
+      power: null,
+    };
+  },
   components: {
     challengerHelper,
+  },
+  methods: {
+    initPower() {
+      const storedPower = { ...this.$store.state.challenger.power };
+      for (const key in storedPower) {
+        if (key !== null) {
+          const newObj = {
+            point: storedPower[key],
+            isOn: false,
+          };
+          storedPower[key] = newObj;
+        }
+      }
+      this.power = storedPower;
+    },
+    chooseHelper(helperName) {
+      for (const key in this.power) {
+        if (key !== null) {
+          this.power[key].isOn = false;
+        }
+      }
+      this.power[helperName].isOn = true;
+      this.$store.commit('setHelper', { point: this.power[helperName].point, name: helperName });
+    },
   },
 };
 </script>
 <style lang="scss" scoped>
   .helpers{
+    margin-top: 2.5rem;
     height: 3rem;
-    width: 70%;
+    width: 75%;
     background-color: #fcdfc8;
     display: flex;
     align-items: center;

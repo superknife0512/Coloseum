@@ -2,14 +2,16 @@
   <figure class="avatar">
     <h6> {{ name }} </h6>
     <img :src="avaChoose"
-         :alt="img">
+         :alt="img"
+         @dblclick="changeChallenger(name)">
     <h5 @click="showModal = !showModal"> {{ point }} </h5>
-    <change-score-tooltip :isShow="showModal"></change-score-tooltip>
+    <change-score-tooltip :isShow="showModal" :name="name"></change-score-tooltip>
   </figure>
 </template>
 <script>
 import changeScoreTooltip from '../tooltips/changeScore';
 import imgChoose from '../util/imgChoose';
+import eventBus from '../util/bus';
 
 export default {
   props: {
@@ -28,6 +30,12 @@ export default {
   computed: {
     avaChoose() {
       return imgChoose.avaChoose(this.img);
+    },
+  },
+  methods: {
+    changeChallenger(name) {
+      this.$emit('changeChallenger', name);
+      eventBus.$emit('initPower');
     },
   },
 };
@@ -51,6 +59,11 @@ export default {
       width: 5.5rem;
       object-fit: cover;
       border-radius: 50%;
+      transition: all .2s;
+
+      &:hover{
+        transform: translateY(-.2rem);
+      }
     }
     h5 {
       padding: .1rem 1.2rem;
