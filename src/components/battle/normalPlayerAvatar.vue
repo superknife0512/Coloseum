@@ -1,16 +1,22 @@
 <template>
   <figure class="avatar">
-    <h6> Leesin </h6>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/66/An_up-close_picture_of_a_curious_male_domestic_shorthair_tabby_cat.jpg"
-        alt="cat">
-    <h5 @click="showModal = !showModal"> 550 </h5>
+    <h6> {{ name }} </h6>
+    <img :src="avaChoose"
+         :alt="img">
+    <h5 @click="showModal = !showModal"> {{ point }} </h5>
     <change-score-tooltip :isShow="showModal"></change-score-tooltip>
   </figure>
 </template>
 <script>
 import changeScoreTooltip from '../tooltips/changeScore';
+import imgChoose from '../util/imgChoose';
 
 export default {
+  props: {
+    img: String,
+    name: String,
+    point: Number,
+  },
   data() {
     return {
       showModal: false,
@@ -18,6 +24,11 @@ export default {
   },
   components: {
     changeScoreTooltip,
+  },
+  computed: {
+    avaChoose() {
+      return imgChoose.avaChoose(this.img);
+    },
   },
 };
 </script>
@@ -45,7 +56,7 @@ export default {
       padding: .1rem 1.2rem;
       background-color: #fff;
       border-radius: 25rem;
-      margin-top: -1rem;
+      margin-top: -.6rem;
       cursor: pointer;
       transition: all .2s;
 

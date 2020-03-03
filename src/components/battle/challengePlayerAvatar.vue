@@ -1,10 +1,10 @@
 <template>
   <figure class="challenger">
-    <img src="https://i0.wp.com/cdn-prod.medicalnewstoday.com/content/images/articles/322/322868/golden-retriever-puppy.jpg?w=1155&h=1541"
-        alt="cat">
+    <img :src="imgChoose"
+         :alt="challenger.img">
     <div class="challenger__info">
-      <h2 @click="showModal = !showModal"> 526 </h2>
-      <h3> Garen </h3>
+      <h2 @click="showModal = !showModal"> {{challenger.point}} </h2>
+      <h3> {{challenger.username}} </h3>
       <change-score-tooltip :isShow="showModal" :position="'bottom: -7.2rem !important'" />
     </div>
   </figure>
@@ -12,7 +12,7 @@
 
 <script>
 import changeScoreTooltip from '../tooltips/changeScore';
-
+import imgChoose from '../util/imgChoose';
 
 export default {
   data() {
@@ -22,6 +22,14 @@ export default {
   },
   components: {
     changeScoreTooltip,
+  },
+  computed: {
+    challenger() {
+      return this.$store.state.challenger;
+    },
+    imgChoose() {
+      return imgChoose.avaChoose(this.challenger.imgChoose);
+    },
   },
 };
 </script>
