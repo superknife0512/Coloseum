@@ -30,7 +30,9 @@
 <script>
 export default {
   data() {
-    return null;
+    return {
+      // something
+    };
   },
 };
 </script>

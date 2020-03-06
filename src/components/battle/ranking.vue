@@ -9,20 +9,34 @@
 import imgChoose from '../util/imgChoose';
 
 export default {
+  mounted() {
+    const index = this.getRankFromSortPlayer;
+    this.$store.commit('changeRank', index + 1);
+  },
   computed: {
     challengerData() {
       return this.$store.state.challenger;
     },
 
-    challengerRank() {
+    getRankFromSortPlayer() {
       const sortPlayer = [...this.$store.state.allPlayers].sort((a, b) => b.point - a.point);
-      // eslint-disable-next-line max-len
-      const index = sortPlayer.findIndex((ele) => ele.username === this.challengerData.username);
+      return sortPlayer.findIndex((ele) => ele.username === this.challengerData.username);
+    },
+
+    challengerRank() {
+      const index = this.getRankFromSortPlayer;
       const img = imgChoose.medalImg(index + 1);
       return {
         rank: index + 1,
         img,
       };
+    },
+  },
+  watch: {
+    challengerRank(newVal, oldVal) {
+      if (newVal.rank !== oldVal.rank) {
+        this.$store.commit('changeRank', newVal.rank);
+      }
     },
   },
 };

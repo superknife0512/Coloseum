@@ -44,7 +44,7 @@ export default {
 
     &__info{
       position: relative;
-      margin-left: 1.5rem;
+      margin-left: 2.5rem;
       text-align: center;
       cursor: pointer;
     }

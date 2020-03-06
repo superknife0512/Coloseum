@@ -58,7 +58,7 @@ export default {
 </script>
 <style lang="scss" scoped>
   .helpers{
-    margin-top: 2.5rem;
+    margin-top: 3.3rem;
     height: 3rem;
     width: 75%;
     background-color: #fcdfc8;
