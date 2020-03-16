@@ -3,7 +3,6 @@
     <h4 class="level ">
       Level: {{ level }} ({{levelPoint * 10}})
     </h4> |
-    <h5 class="">Time: {{ time }}s</h5> |
     <h4 class="maxScore ">Max Score: {{ score }} </h4> |
     <button class="btn"
             :class="isStart ? 'btn-danger' : 'btn-primary'"

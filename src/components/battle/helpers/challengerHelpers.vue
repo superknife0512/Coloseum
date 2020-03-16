@@ -11,7 +11,7 @@
 </template>
 <script>
 import challengerHelper from './helper';
-import eventBus from '../util/bus';
+import eventBus from '../../util/bus';
 
 export default {
   created() {

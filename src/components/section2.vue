@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import challengerHelpers from './battle/challengerHelpers';
-import ranking from './battle/ranking';
+import challengerHelpers from './battle/helpers/challengerHelpers';
+import ranking from './battle/helpers/ranking';
 
 export default {
   components: {

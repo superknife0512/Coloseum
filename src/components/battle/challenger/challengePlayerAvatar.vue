@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import changeScoreTooltip from '../tooltips/changeScore';
-import imgChoose from '../util/imgChoose';
+import changeScoreTooltip from '../../tooltips/changeScore';
+import imgChoose from '../../util/imgChoose';
 
 export default {
   data() {

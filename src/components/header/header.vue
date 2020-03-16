@@ -13,14 +13,11 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          <li class="nav-item" :class="{'active': activePage === 'battle'}">
+            <a class="nav-link" href="#" @click="changePage('battle')">Battle</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Battle</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">User</a>
+          <li class="nav-item" :class="{'active': activePage === 'user'}">
+            <a class="nav-link" href="#" @click="changePage('user')">User</a>
           </li>
         </ul>
       </div>
@@ -29,10 +26,13 @@
 </template>
 <script>
 export default {
-  data() {
-    return {
-      // something
-    };
+  props: {
+    activePage: String,
+  },
+  methods: {
+    changePage(pageName) {
+      this.$emit('changePage', pageName);
+    },
   },
 };
 </script>

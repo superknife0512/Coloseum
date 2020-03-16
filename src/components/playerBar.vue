@@ -13,8 +13,8 @@
   </div>
 </template>
 <script>
-import challengePlayerAvatar from './battle/challengePlayerAvatar';
-import normalPlayerAvatar from './battle/normalPlayerAvatar';
+import challengePlayerAvatar from './battle/challenger/challengePlayerAvatar';
+import normalPlayerAvatar from './battle/challenger/normalPlayerAvatar';
 
 export default {
   components: {

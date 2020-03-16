@@ -1,17 +1,25 @@
 <template>
   <div>
-    <v-header></v-header>
+    <v-header :activePage="activePage" @changePage="activePage = $event"></v-header>
     <div class="container">
-      <battle-field></battle-field>
+      <battle-field v-if="activePage === 'battle'"></battle-field>
+      <user-page v-else></user-page>
     </div>
   </div>
 </template>
 
 <script>
 import battleField from './pages/battleField.vue';
-import vHeader from './components/header/headder.vue';
+import userPage from './pages/userPage.vue';
+import vHeader from './components/header/header';
 
 export default {
+  data() {
+    return {
+      activePage: 'battle',
+    };
+  },
+
   created() {
     this.$store.commit('initApp');
     console.log('start');
@@ -19,6 +27,7 @@ export default {
   components: {
     battleField,
     vHeader,
+    userPage,
   },
 };
 </script>

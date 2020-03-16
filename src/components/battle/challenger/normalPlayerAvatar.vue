@@ -9,9 +9,9 @@
   </figure>
 </template>
 <script>
-import changeScoreTooltip from '../tooltips/changeScore';
-import imgChoose from '../util/imgChoose';
-import eventBus from '../util/bus';
+import changeScoreTooltip from '../../tooltips/changeScore';
+import imgChoose from '../../util/imgChoose';
+import eventBus from '../../util/bus';
 
 export default {
   props: {

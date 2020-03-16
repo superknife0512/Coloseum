@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import imgChoose from '../util/imgChoose';
+import imgChoose from '../../util/imgChoose';
 
 export default {
   props: {
@@ -34,7 +34,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../assets/sass/main.scss';
+@import '../../../assets/sass/main.scss';
   .helper {
     background-color: rgb(245, 239, 235);
     display: inline-block;

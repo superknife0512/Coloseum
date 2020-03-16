@@ -6,7 +6,7 @@
   </div>
 </template>
 <script>
-import imgChoose from '../util/imgChoose';
+import imgChoose from '../../util/imgChoose';
 
 export default {
   mounted() {

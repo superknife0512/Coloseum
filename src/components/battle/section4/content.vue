@@ -5,7 +5,7 @@
     </div>
     <div class="alert alert-light question__answer" role="alert">
       <h5 v-for="(ans, i) in question.answers" :key="i">
-        ({{ i }}) - {{ ans }}
+        ({{ i + 1 }}) - {{ ans }}
       </h5>
     </div>
   </div>
