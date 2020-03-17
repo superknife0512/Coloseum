@@ -14,10 +14,13 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item" :class="{'active': activePage === 'battle'}">
-            <a class="nav-link" href="#" @click="changePage('battle')">Battle</a>
+            <a class="nav-link" @click="changePage('battle')">Battle</a>
           </li>
           <li class="nav-item" :class="{'active': activePage === 'user'}">
-            <a class="nav-link" href="#" @click="changePage('user')">User</a>
+            <a class="nav-link" @click="changePage('user')">User</a>
+          </li>
+          <li class="nav-item" :class="{'active': activePage === 'signIn'}">
+            <a class="nav-link" @click="changePage('signIn')">Sign In</a>
           </li>
         </ul>
       </div>
@@ -36,3 +39,10 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.navbar-nav{
+  .nav-item {
+    cursor: pointer !important;
+  }
+}
+</style>

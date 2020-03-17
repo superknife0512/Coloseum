@@ -5,9 +5,9 @@ export default [
     img: 'dog',
     power: {
       shield: 10,
-      link: 20,
-      support: 9,
-      steal: 20,
+      link: 5,
+      support: 7,
+      steal: 15,
     },
   },
   {
@@ -15,10 +15,10 @@ export default [
     point: 50,
     img: 'cat',
     power: {
-      shield: 20,
-      link: 20,
-      support: 9,
-      steal: 20,
+      shield: 10,
+      link: 5,
+      support: 7,
+      steal: 15,
     },
   },
   {
@@ -27,9 +27,9 @@ export default [
     img: 'goat',
     power: {
       shield: 10,
-      link: 20,
-      support: 18,
-      steal: 20,
+      link: 5,
+      support: 7,
+      steal: 15,
     },
   },
   {
@@ -38,9 +38,9 @@ export default [
     img: 'eagle',
     power: {
       shield: 10,
-      link: 20,
-      support: 9,
-      steal: 40,
+      link: 5,
+      support: 7,
+      steal: 15,
     },
   },
 ];

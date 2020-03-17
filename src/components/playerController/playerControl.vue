@@ -2,10 +2,10 @@
   <div>
     <div class="user-summary">
       <div class="user-summary__score">
-        150
+        {{ currentPlayer.score }}
       </div>
       <div class="user-summary__name">
-        Leesin
+        {{ currentPlayer.username }}
       </div>
     </div>
     <hr>
@@ -32,6 +32,11 @@ export default {
         number,
         color,
       });
+    },
+  },
+  computed: {
+    currentPlayer() {
+      return this.$store.state.currentPlayer;
     },
   },
 };

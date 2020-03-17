@@ -59,7 +59,7 @@ export default {
       case 4:
         return fourthImg;
       default:
-        return eagleImg;
+        return fourthImg;
     }
   },
 };

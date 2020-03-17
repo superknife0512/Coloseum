@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 import Vue from 'vue';
 import Vuex from 'vuex';
+import io from 'socket.io-client';
 import playerData from '../components/data/player';
 import questionData from '../components/data/questions';
 
@@ -8,7 +9,9 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    allPlayers: playerData,
+    socket: io('http://localhost:3000'),
+
+    allPlayers: [],
     normalPlayer: [],
     challenger: null,
     rank: 1,
@@ -19,8 +22,18 @@ export default new Vuex.Store({
     level: '',
     time: '',
     score: 0,
+
+    currentPlayer: {
+      username: '',
+      score: 100,
+      img: '',
+    },
   },
   mutations: {
+    setAllPlayers(state, allPlayerPayload) {
+      state.allPlayers = allPlayerPayload;
+    },
+
     initApp(state) {
       state.normalPlayer = state.allPlayers.slice(0, playerData.length - 1);
       state.challenger = state.allPlayers[playerData.length - 1];
@@ -76,6 +89,10 @@ export default new Vuex.Store({
       state.level = '';
       state.time = '';
       state.score = 0;
+    },
+
+    setCurrentPlayer(state, payload) {
+      state.currentPlayer = payload;
     },
   },
   actions: {
