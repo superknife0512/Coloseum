@@ -30,6 +30,18 @@ export default {
   components: {
     challengerHelper,
   },
+  watch: {
+    stateOfHelper(val) {
+      if (!val) {
+        for (const key in this.power) {
+          if (key !== null) {
+            this.power[key].isOn = false;
+          }
+        }
+        this.initPower();
+      }
+    },
+  },
   methods: {
     initPower() {
       const storedPower = { ...this.$store.state.challenger.power };
@@ -52,6 +64,11 @@ export default {
       }
       this.power[helperName].isOn = true;
       this.$store.commit('setHelper', { point: this.power[helperName].point, name: helperName });
+    },
+  },
+  computed: {
+    stateOfHelper() {
+      return this.$store.state.helperPower;
     },
   },
 };

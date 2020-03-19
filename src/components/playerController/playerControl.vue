@@ -11,15 +11,15 @@
     <hr>
     <div class="user-answer">
       <div class="user-answer__2-col">
-        <h4 class="user-answer__title red" @click="chooseQuestion(1, 'red')"> 1 </h4>
-        <h4 class="user-answer__title green" @click="chooseQuestion(2, 'green')" > 2 </h4>
+        <h4 class="user-answer__title red" @click="chooseAnswer(1, 'red')"> 1 </h4>
+        <h4 class="user-answer__title green" @click="chooseAnswer(2, 'green')" > 2 </h4>
       </div>
       <div class="user-answer__2-col">
-        <h4 class="user-answer__title blue" @click="chooseQuestion(3, 'blue')" > 3 </h4>
-        <h4 class="user-answer__title orange" @click="chooseQuestion(4, 'orange')" > 4 </h4>
+        <h4 class="user-answer__title blue" @click="chooseAnswer(3, 'blue')" > 3 </h4>
+        <h4 class="user-answer__title orange" @click="chooseAnswer(4, 'orange')" > 4 </h4>
       </div>
       <div class="user-answer__1-col">
-        <h4 class="user-answer__title violet" @click="chooseQuestion(5, 'violet')" > 5 </h4>
+        <h4 class="user-answer__title violet" @click="chooseAnswer(5, 'violet')" > 5 </h4>
       </div>
     </div>
   </div>
@@ -27,16 +27,28 @@
 <script>
 export default {
   methods: {
-    chooseQuestion(number, color) {
-      this.$emit('chooseQuestion', {
-        number,
-        color,
-      });
+    chooseAnswer(number, color) {
+      if (this.canSubmit) {
+        this.$emit('chooseQuestion', {
+          number,
+          color,
+        });
+        this.$axios.post('/send-answer', {
+          username: this.currentPlayer.username,
+          answer: number,
+        });
+      } else {
+        // eslint-disable-next-line no-alert
+        alert('You cannot submit this time !!!');
+      }
     },
   },
   computed: {
     currentPlayer() {
       return this.$store.state.currentPlayer;
+    },
+    canSubmit() {
+      return this.$store.state.canSubmit;
     },
   },
 };

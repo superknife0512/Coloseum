@@ -1,7 +1,7 @@
 export default [
   {
     username: 'Leesin',
-    point: 100,
+    score: 100,
     img: 'dog',
     power: {
       shield: 10,
@@ -12,7 +12,7 @@ export default [
   },
   {
     username: 'Garen',
-    point: 50,
+    score: 50,
     img: 'cat',
     power: {
       shield: 10,
@@ -23,7 +23,7 @@ export default [
   },
   {
     username: 'Katarina',
-    point: 106,
+    score: 106,
     img: 'goat',
     power: {
       shield: 10,
@@ -34,7 +34,7 @@ export default [
   },
   {
     username: 'Resino',
-    point: 195,
+    score: 195,
     img: 'eagle',
     power: {
       shield: 10,

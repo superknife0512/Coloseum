@@ -19,7 +19,7 @@ export default {
     },
 
     getRankFromSortPlayer() {
-      const sortPlayer = [...this.$store.state.allPlayers].sort((a, b) => b.point - a.point);
+      const sortPlayer = [...this.$store.state.allPlayers].sort((a, b) => b.score - a.score);
       return sortPlayer.findIndex((ele) => ele.username === this.challengerData.username);
     },
 

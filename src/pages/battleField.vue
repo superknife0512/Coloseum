@@ -3,6 +3,9 @@
     <helper-modal
       @onClose="isModalActive = false"
       v-if="isModalActive"/>
+    <summary-modal
+      v-if="isActiveSummary"
+      @onClose="isActiveSummary = false" />
     <br>
     <h3>Battle Field</h3>
     <hr>
@@ -20,11 +23,18 @@ import section2 from '../components/section2.vue';
 import section3 from '../components/section3.vue';
 import section4 from '../components/section4.vue';
 import helperModal from '../components/modals/helperModal';
+import summaryModal from '../components/modals/summaryModal';
 
 export default {
+  created() {
+    this.socket.on('allAnswersSubmitted', () => {
+      this.isActiveSummary = true;
+    });
+  },
   data() {
     return {
       isModalActive: false,
+      isActiveSummary: false,
     };
   },
 
@@ -32,11 +42,14 @@ export default {
     helperChallenger() {
       return this.$store.state.helperPower;
     },
+    socket() {
+      return this.$store.state.socket;
+    },
   },
 
   watch: {
-    helperChallenger(value, oldValue) {
-      if (value !== oldValue) {
+    helperChallenger(value) {
+      if (value !== null) {
         this.isModalActive = true;
         setTimeout(() => {
           this.isModalActive = false;
@@ -51,6 +64,7 @@ export default {
     section3,
     section4,
     helperModal,
+    summaryModal,
   },
 };
 </script>

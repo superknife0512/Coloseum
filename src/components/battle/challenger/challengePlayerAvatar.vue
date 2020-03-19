@@ -3,7 +3,7 @@
     <img :src="imgChoose"
          :alt="challenger.img">
     <div class="challenger__info">
-      <h2 @click="showModal = !showModal"> {{challenger.point}} </h2>
+      <h2 @click="showModal = !showModal"> {{challenger.score}} </h2>
       <h3> {{challenger.username}} </h3>
       <change-score-tooltip
         :isShow="showModal"

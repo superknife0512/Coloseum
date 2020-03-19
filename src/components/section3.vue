@@ -49,7 +49,7 @@ export default {
     },
     bonusTimeCal() {
       switch (this.time) {
-        case '10':
+        case '15':
           return 15;
         case '45':
           return 10;

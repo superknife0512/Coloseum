@@ -41,7 +41,7 @@ export default {
     },
 
     helperPowerName() {
-      return this.$store.state.helperPower.name;
+      return this.$store.state.helperPower?.name;
     },
     helperInfo() {
       let infoObj = {};
@@ -80,7 +80,7 @@ export default {
 
     bottomInNormal() {
       const sortPlayers = [...this.$store.state.normalPlayer].sort((a, b) => b.point - a.point);
-      return sortPlayers[2];
+      return sortPlayers[sortPlayers.length - 1];
     },
   },
 
@@ -102,7 +102,7 @@ export default {
       object-fit: cover;
     }
     h4 {
-      color: rgb(255, 72, 0);
+      color: rgb(30, 139, 202);
     }
   }
 }

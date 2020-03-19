@@ -2,8 +2,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import io from 'socket.io-client';
-import playerData from '../components/data/player';
 import questionData from '../components/data/questions';
+import evaluate from '../components/util/evaluate';
 
 Vue.use(Vuex);
 
@@ -22,25 +22,50 @@ export default new Vuex.Store({
     level: '',
     time: '',
     score: 0,
+    playerAnswers: [], // username, answer
+    canSubmit: false,
 
     currentPlayer: {
       username: '',
       score: 100,
       img: '',
     },
+    finalScore: 0,
   },
   mutations: {
+    evaluateAnswer(state) {
+      evaluate(state);
+    },
+
     setAllPlayers(state, allPlayerPayload) {
       state.allPlayers = allPlayerPayload;
     },
 
+    updateAnswer(state, answersPayload) {
+      state.playerAnswers = answersPayload;
+    },
+
     initApp(state) {
-      state.normalPlayer = state.allPlayers.slice(0, playerData.length - 1);
-      state.challenger = state.allPlayers[playerData.length - 1];
+      state.normalPlayer = state.allPlayers.slice(0, state.allPlayers.length - 1);
+      state.challenger = state.allPlayers[state.allPlayers.length - 1];
     },
 
     changeRank(state, rank) {
       state.rank = rank;
+    },
+
+    canSubmitChange(state, questionState) {
+      console.log(questionState);
+      if (questionState === 'start') {
+        state.canSubmit = true;
+      } else {
+        state.canSubmit = false;
+      }
+    },
+
+    updateAllPlayer(state) {
+      const newAllPlayers = [...state.normalPlayer, state.challenger];
+      state.allPlayers = newAllPlayers;
     },
 
     changeChallenger(state, newChallengerName) {
@@ -50,21 +75,22 @@ export default new Vuex.Store({
       state.normalPlayer = newAllPlayers.filter((ele) => ele.username !== newChallengerName);
     },
 
-    plusScore(state, payload) {
+    plusScore(state, payload) { // name, score
+      console.log(payload, 53);
       if (payload.name === state.challenger.username) {
-        state.challenger.point += +payload.score;
+        state.challenger.score += +payload.score;
       } else {
         const player = state.normalPlayer.find((ele) => ele.username === payload.name);
-        player.point += +payload.score;
+        player.score += +payload.score;
       }
     },
 
     minusScore(state, payload) {
       if (payload.name === state.challenger.username) {
-        state.challenger.point -= +payload.score;
+        state.challenger.score -= +payload.score;
       } else {
         const player = state.normalPlayer.find((ele) => ele.username === payload.name);
-        player.point -= +payload.score;
+        player.score -= +payload.score;
       }
     },
 
@@ -89,6 +115,9 @@ export default new Vuex.Store({
       state.level = '';
       state.time = '';
       state.score = 0;
+      state.canSubmit = false;
+      state.finalScore = 0;
+      state.helperPower = null;
     },
 
     setCurrentPlayer(state, payload) {

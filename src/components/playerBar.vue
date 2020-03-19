@@ -6,7 +6,7 @@
         :key="player.username"
         :name="player.username"
         :img="player.img"
-        :point="player.point"
+        :score="player.score"
         @changeChallenger="onChangeChallenger($event)" />
       <challenge-player-avatar></challenge-player-avatar>
     </div>

@@ -4,7 +4,7 @@
     <img :src="avaChoose"
          :alt="img"
          @dblclick="changeChallenger(name)">
-    <h5 @click="showModal = !showModal"> {{ point }} </h5>
+    <h5 @click="showModal = !showModal"> {{ score }} </h5>
     <change-score-tooltip :isShow="showModal" :name="name"></change-score-tooltip>
   </figure>
 </template>
@@ -17,7 +17,7 @@ export default {
   props: {
     img: String,
     name: String,
-    point: Number,
+    score: Number,
   },
   data() {
     return {

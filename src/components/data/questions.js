@@ -4,7 +4,7 @@ export default [
     level: 'easy',
     content: 'This is the easy question... Choose true/false',
     answers: ['answer number 1', 'answer 2'],
-    correctAns: 0,
+    correctAns: 1,
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ export default [
     level: 'hard',
     content: 'This is the hard question... Choose correct answer',
     answers: ['answer 1', 'answer 2', 'answer 3', 'answer 4'],
-    correctAns: 3,
+    correctAns: 1,
   },
   {
     id: 5,

@@ -20,19 +20,66 @@ import signInPage from './pages/signInPage';
 export default {
   data() {
     return {
-      activePage: 'battle',
+      activePage: 'signIn',
     };
   },
 
   created() {
+    this.$axios.get('/old-data')
+      .then((res) => {
+        console.log('old data', res.data.playerData);
+        if (res.data.playerData.length > 0) {
+          const properPlayerList = res.data.playerData.map((ele) => ({
+            ...ele,
+            power: {
+              shield: 8,
+              link: 5,
+              support: 7,
+              steal: 11,
+            },
+          }));
+          this.$store.commit('setAllPlayers', properPlayerList);
+          this.$store.commit('initApp');
+        }
+      });
     this.initSocketState();
-    this.$store.commit('initApp');
+    this.submitListener();
+    this.questionStateListener();
+    this.evaluateAnswer();
   },
 
   methods: {
     initSocketState() {
       this.socket.on('globalAddPlayer', (playerList) => {
-        this.$store.commit('setAllPlayers', playerList);
+        const properPlayerList = playerList.map((ele) => ({
+          ...ele,
+          power: {
+            shield: 8,
+            link: 5,
+            support: 7,
+            steal: 11,
+          },
+        }));
+        this.$store.commit('setAllPlayers', properPlayerList);
+        this.$store.commit('initApp');
+      });
+    },
+    submitListener() {
+      this.socket.on('submitAnswer', (answers) => {
+        this.$store.commit('updateAnswer', answers);
+      });
+    },
+    questionStateListener() {
+      this.socket.on('questionState', (state) => {
+        this.$store.commit('canSubmitChange', state);
+      });
+    },
+    evaluateAnswer() {
+      this.socket.on('allAnswersSubmitted', () => {
+        console.log(this.question);
+        if (this.question) {
+          this.$store.commit('evaluateAnswer');
+        }
       });
     },
   },
@@ -46,6 +93,9 @@ export default {
   computed: {
     socket() {
       return this.$store.state.socket;
+    },
+    question() {
+      return this.$store.state.question;
     },
   },
 };

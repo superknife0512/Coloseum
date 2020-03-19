@@ -13,7 +13,8 @@
       <hr>
       <v-time :time="parseInt(time)"
               :isStart="isStart"
-              @end="onFinal()"/>
+              @end="onFinal()"
+              @start="onStart()"/>
     </div>
   </div>
 </template>

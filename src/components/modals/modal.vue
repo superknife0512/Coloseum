@@ -39,6 +39,7 @@ export default {
       z-index: 2;
       border-radius: 8px;
       max-width: 40rem;
+      margin: 0 1.5rem;
       .btn {
         float: right;
       }

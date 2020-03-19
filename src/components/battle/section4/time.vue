@@ -23,6 +23,9 @@ export default {
     busEvent.$on('startCounting', () => {
       this.startCounting();
     });
+    this.socket.on('allAnswersSubmitted', () => {
+      this.remainingTime = 0;
+    });
   },
   props: {
     time: {
@@ -38,7 +41,12 @@ export default {
     };
   },
   methods: {
+    apiCallChangeQuestionState(state) {
+      this.$axios.post('/question', { state });
+    },
     startCounting() {
+      this.apiCallChangeQuestionState('start');
+      this.$emit('start');
       this.interval = setInterval(() => {
         this.remainingTime -= 1;
       }, 1000);
@@ -66,17 +74,22 @@ export default {
       }
       return bg;
     },
+    socket() {
+      return this.$store.state.socket;
+    },
   },
   watch: {
     remainingTime(val) {
       if (val === 0) {
         clearInterval(this.interval);
         this.$emit('end');
+        this.apiCallChangeQuestionState('end');
       }
     },
     isStart(val) {
       if (!val) {
         clearInterval(this.interval);
+        this.apiCallChangeQuestionState('end');
       }
     },
   },
