@@ -123,6 +123,10 @@ export default new Vuex.Store({
     setCurrentPlayer(state, payload) {
       state.currentPlayer = payload;
     },
+
+    setCurrentPlayerScore(state, payload) {
+      state.currentPlayer.score = payload;
+    },
   },
   actions: {
   },

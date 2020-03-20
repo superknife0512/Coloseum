@@ -74,12 +74,12 @@ export default {
     },
 
     topInNormal() {
-      const sortPlayers = [...this.$store.state.normalPlayer].sort((a, b) => b.point - a.point);
+      const sortPlayers = [...this.$store.state.normalPlayer].sort((a, b) => b.score - a.score);
       return sortPlayers[0];
     },
 
     bottomInNormal() {
-      const sortPlayers = [...this.$store.state.normalPlayer].sort((a, b) => b.point - a.point);
+      const sortPlayers = [...this.$store.state.normalPlayer].sort((a, b) => b.score - a.score);
       return sortPlayers[sortPlayers.length - 1];
     },
   },
@@ -91,9 +91,13 @@ export default {
 </script>
 <style lang="scss" scoped>
 .modal{
+  &__helper {
+    text-align: center;
+  }
   &__player {
     display: flex;
     align-items: center;
+    justify-content: center;
     img {
       height: 5rem;
       width: 5rem;

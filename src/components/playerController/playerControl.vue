@@ -58,7 +58,7 @@ export default {
   .user-summary{
     display: flex;
     align-items: center;
-    margin-top: 2rem;
+    margin-top: .5rem;
 
     &__score {
       height: 5rem;

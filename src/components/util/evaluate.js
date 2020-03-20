@@ -69,11 +69,14 @@ export default (state) => {
     }
     challengerPower.link += 5;
   } else if (state.helperPower.name === 'support') {
+    const normalAnswerWithoutSupportPlayer = state.normalPlayer.filter((ele) => ele.username !== supportPlayer.username);
+    correctNumber += getFalseNumberAndCorrectNumber(state, normalAnswerWithoutSupportPlayer).correctNumber;
+    falseNumber += getFalseNumberAndCorrectNumber(state, normalAnswerWithoutSupportPlayer).falseNumber;
     if (isSupportCorrect || isChallengerCorrect) {
-      state.finalScore = ((falseNumber * state.score) / 2) - challengerPower.support;
+      state.finalScore = Math.round(((falseNumber * state.score) - challengerPower.support) / 2);
     } else {
       console.log('No one true');
-      state.finalScore = -(levelNumber * correctNumber * 5 + challengerPower.support);
+      state.finalScore = -Math.round((levelNumber * correctNumber * 5 + challengerPower.support) / 2);
     }
     challengerPower.support += 7;
   }

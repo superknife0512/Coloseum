@@ -51,9 +51,6 @@ export default {
     helperChallenger(value) {
       if (value !== null) {
         this.isModalActive = true;
-        setTimeout(() => {
-          this.isModalActive = false;
-        }, 20000);
       }
     },
   },

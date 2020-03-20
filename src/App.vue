@@ -29,15 +29,21 @@ export default {
       .then((res) => {
         console.log('old data', res.data.playerData);
         if (res.data.playerData.length > 0) {
-          const properPlayerList = res.data.playerData.map((ele) => ({
-            ...ele,
-            power: {
-              shield: 8,
-              link: 5,
-              support: 7,
-              steal: 11,
-            },
-          }));
+          const properPlayerList = res.data.playerData.map((ele) => {
+            let returnedData = {
+              ...ele,
+              power: {
+                shield: 8,
+                link: 5,
+                support: 7,
+                steal: 11,
+              },
+            };
+            if (ele.power) {
+              returnedData = { ...ele };
+            }
+            return returnedData;
+          });
           this.$store.commit('setAllPlayers', properPlayerList);
           this.$store.commit('initApp');
         }
@@ -46,9 +52,16 @@ export default {
     this.submitListener();
     this.questionStateListener();
     this.evaluateAnswer();
+    this.updateScoreListener();
   },
 
   methods: {
+    updateScoreListener() {
+      this.socket.on('updateEachPlayer', (score) => {
+        this.$store.commit('setCurrentPlayerScore', score);
+      });
+    },
+
     initSocketState() {
       this.socket.on('globalAddPlayer', (playerList) => {
         const properPlayerList = playerList.map((ele) => ({
@@ -64,6 +77,7 @@ export default {
         this.$store.commit('initApp');
       });
     },
+
     submitListener() {
       this.socket.on('submitAnswer', (answers) => {
         this.$store.commit('updateAnswer', answers);

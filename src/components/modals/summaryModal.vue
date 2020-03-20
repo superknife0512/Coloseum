@@ -57,6 +57,7 @@ export default {
         this.stealHelper();
       }
       this.$store.commit('updateAllPlayer');
+      this.updateBackendPlayerScore();
     },
 
     helperInfo(helperName) {
@@ -87,6 +88,14 @@ export default {
           };
       }
       return infoObj;
+    },
+
+    updateBackendPlayerScore() {
+      this.$axios.post('/update-score', {
+        allPlayers: [...this.allPlayersData],
+      }).then((res) => {
+        console.log(res);
+      });
     },
 
     withoutHelper() {
@@ -136,7 +145,6 @@ export default {
         });
       }
     },
-
   },
 
   computed: {
@@ -173,12 +181,16 @@ export default {
       };
     },
     bottomNormal() {
-      const sortedNormalPlayer = [...this.$store.state].normalPlayer.sort((b, a) => b.score - a.score);
+      const sortedNormalPlayer = [...this.$store.state.normalPlayer].sort((b, a) => b.score - a.score);
       return sortedNormalPlayer[0];
     },
 
     normalPlayers() {
       return this.$store.state.normalPlayer;
+    },
+
+    allPlayersData() {
+      return this.$store.state.allPlayers;
     },
   },
 };
