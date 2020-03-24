@@ -131,6 +131,17 @@ export default new Vuex.Store({
     setCurrentPlayerScore(state, payload) {
       state.currentPlayer.score = payload;
     },
+
+    saveData(state) {
+      localStorage.setItem('allQuestions', JSON.stringify(state.allQuestions));
+    },
+
+    setOldData(state) {
+      const allQuestions = JSON.parse(localStorage.getItem('allQuestions'));
+      if (allQuestions) {
+        state.allQuestions = allQuestions;
+      }
+    },
   },
   actions: {
   },

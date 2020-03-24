@@ -7,7 +7,10 @@
       :isActive="isActiveSummary"
       @onClose="isActiveSummary = false" />
     <br>
-    <h3>Battle Field</h3>
+    <div class="d-flex">
+      <h3>Battle Field</h3>
+      <button class="btn btn-danger ml-4" @click="resetGame()">Reset the game</button>
+    </div>
     <hr>
     <player-bar></player-bar>
     <br>
@@ -29,6 +32,9 @@ import summaryModal from '../components/modals/summaryModal';
 import slideTrans from '../components/transitions/slide';
 
 export default {
+  /* eslint-disable no-restricted-globals */
+  /* eslint-disable no-alert */
+
   created() {
     this.socket.on('allAnswersSubmitted', () => {
       this.isActiveSummary = true;
@@ -57,6 +63,19 @@ export default {
     helperChallenger(value) {
       if (value !== null) {
         this.isModalActive = true;
+      }
+    },
+  },
+
+  methods: {
+    resetGame() {
+      const sure = confirm('Are you sure');
+      if (sure) {
+        localStorage.clear();
+        this.$axios.post('/reset', {})
+          .then(() => {
+            location.reload();
+          });
       }
     },
   },

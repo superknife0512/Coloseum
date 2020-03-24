@@ -1,6 +1,7 @@
 <template>
   <v-modal @close="onClose()" :isActive="isActive">
     <div class="modal__helper">
+      <img :src="helperImg" alt="helper">
       <h3> {{ helperInfo.title }} </h3>
       <p> {{ helperInfo.explain }} </p>
       <div class="modal__player top" v-if="helperPowerName === 'link'">
@@ -77,6 +78,10 @@ export default {
       return infoObj;
     },
 
+    helperImg() {
+      return imgChoose.helperImgChoose(this.helperPowerName);
+    },
+
     topInNormal() {
       const sortPlayers = [...this.$store.state.normalPlayer].sort((a, b) => b.score - a.score);
       return sortPlayers[0];
@@ -97,6 +102,10 @@ export default {
 .modal{
   &__helper {
     text-align: center;
+    img {
+      margin-bottom: 1rem;
+      height: 3rem;
+    }
   }
   &__player {
     display: flex;

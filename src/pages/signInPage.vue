@@ -1,26 +1,40 @@
 <template>
-  <form action="#" class="container" @submit.prevent="onSubmit()">
-    <br>
-    <h3>Sign in your face</h3>
+  <div>
+    <form action="#" class="container" @submit.prevent="onSubmit()">
+      <br>
+      <h3>Sign in your face</h3>
+      <hr>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Player Name</label>
+        <input type="text" class="form-control" v-model="name" >
+      </div>
+      <div class="form-group">
+        <label> Choose your mascot </label>
+        <select name="mascot" id="mascot" v-model="avatar" class="form-control">
+          <option
+            v-for="mascot in mascots"
+            :key="mascot"
+            :value="mascot"> {{ mascot }}
+          </option>
+        </select>
+      </div>
+      <button class="btn btn-primary" type="submit" :disabled="!name || !avatar">
+        Sign in!!
+      </button>
+    </form>
     <hr>
-    <div class="form-group">
-      <label for="exampleInputEmail1">Player Name</label>
-      <input type="text" class="form-control" v-model="name" >
-    </div>
-    <div class="form-group">
-      <label> Choose your mascot </label>
-      <select name="mascot" id="mascot" v-model="avatar" class="form-control">
-        <option
-          v-for="mascot in mascots"
-          :key="mascot"
-          :value="mascot"> {{ mascot }}
-        </option>
-      </select>
-    </div>
-    <button class="btn btn-primary" type="submit">
-      Sign in!!
-    </button>
-  </form>
+    <hr>
+    <form action="#" class="container" @submit.prevent="onResignin()">
+      <h3>Re-Signin</h3>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Player Name</label>
+        <input type="text" class="form-control" v-model="resignName" >
+      </div>
+      <button class="btn btn-warning" type="submit" :disabled="!resignName">
+        Re Sign in!!
+      </button>
+    </form>
+  </div>
 </template>
 <script>
 export default {
@@ -30,27 +44,42 @@ export default {
   data() {
     return {
       name: '',
+      resignName: '',
       avatar: '',
       mascots: ['cat', 'dog', 'eagle', 'goat', 'koala', 'rabbit'],
     };
   },
   methods: {
     onSubmit() {
-      console.log('Submit');
-      this.$emit('changePage', 'user');
       const randomScore = this.generateScore(110, 90);
-      this.$store.commit('setCurrentPlayer', {
-        username: this.name,
-        img: this.avatar,
-        score: randomScore,
-      });
       this.$axios.post('/signIn', {
-        username: this.currentPlayer.username,
+        username: this.name,
         socketId: this.socket.id,
         img: this.avatar,
         score: randomScore,
+      }).then(() => {
+        console.log('Submit');
+        this.$emit('changePage', 'user');
+        this.$store.commit('setCurrentPlayer', {
+          username: this.name,
+          img: this.avatar,
+          score: randomScore,
+        });
+      });
+    },
+    onResignin() {
+      this.$axios.post('/re-signIn', {
+        username: this.resignName,
+        socketId: this.socket.id,
       }).then((res) => {
         console.log(res);
+        const { data } = res;
+        this.$emit('changePage', 'user');
+        this.$store.commit('setCurrentPlayer', {
+          username: this.resignName,
+          img: null,
+          score: data.score,
+        });
       });
     },
     signInListener() {

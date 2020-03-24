@@ -264,6 +264,9 @@ export default {
     position: relative;
     &__bonus {
       color: rgb(133, 23, 51);
+      padding: 1rem;
+      background-color: rgb(245, 245, 245);
+      border-radius: .2rem;
       &--name {
         font-size: 1.5rem;
         color: rgb(197, 22, 81);

@@ -25,6 +25,7 @@ export default {
   },
 
   created() {
+    this.restoreOldQuestion();
     this.$axios.get('/old-data')
       .then((res) => {
         console.log('old data', res.data.playerData);
@@ -53,9 +54,21 @@ export default {
     this.questionStateListener();
     this.evaluateAnswer();
     this.updateScoreListener();
+    this.saveData();
   },
 
   methods: {
+    restoreOldQuestion() {
+      this.$store.commit('setOldData');
+    },
+
+    saveData() {
+      setInterval(() => {
+        this.$store.commit('saveData');
+        console.log('Has saved game');
+      }, 5 * 60000);
+    },
+
     updateScoreListener() {
       this.socket.on('updateEachPlayer', (score) => {
         this.$store.commit('setCurrentPlayerScore', score);
