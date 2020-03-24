@@ -1,15 +1,15 @@
 <template>
-  <v-modal @close="onClose()">
+  <v-modal @close="onClose()" :isActive="isActive">
     <div class="modal__helper">
       <h3> {{ helperInfo.title }} </h3>
       <p> {{ helperInfo.explain }} </p>
       <div class="modal__player top" v-if="helperPowerName === 'link'">
         <img :src="avatarTop" alt="avatar">
-        <h4> {{ topInNormal.username }} is your rival now!!</h4>
+        <h4> {{ topInNormal.username }} is Blocked !!!</h4>
       </div>
       <div class="modal__player bottom" v-if="helperPowerName === 'support'">
         <img :src="avatarBottom" alt="avatar">
-        <h4> {{ bottomInNormal.username }} is your Team mate now!! </h4>
+        <h4> {{ bottomInNormal.username }} is your Teammate now!! </h4>
       </div>
     </div>
   </v-modal>
@@ -23,6 +23,10 @@ export default {
     return {
       // some things here
     };
+  },
+
+  props: {
+    isActive: Boolean,
   },
 
   methods: {

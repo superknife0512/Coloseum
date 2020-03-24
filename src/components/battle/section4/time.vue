@@ -51,6 +51,12 @@ export default {
         this.remainingTime -= 1;
       }, 1000);
     },
+    callTimeUpAPI() {
+      this.$axios.post('/time-up')
+        .then((res) => {
+          console.log(res);
+        });
+    },
   },
   computed: {
     percent() {
@@ -84,6 +90,7 @@ export default {
         clearInterval(this.interval);
         this.$emit('end');
         this.apiCallChangeQuestionState('end');
+        this.callTimeUpAPI();
       }
     },
     isStart(val) {

@@ -2,7 +2,9 @@
   <div>
     <player-control @chooseQuestion="questionEvent($event)"></player-control>
     <v-inform v-if="isInform" :color="color"></v-inform>
-    <player-modal v-if="isActivePlayerModal" @onClose="isActivePlayerModal = false"></player-modal>
+    <player-modal
+      :isActive="isActivePlayerModal"
+      @onClose="isActivePlayerModal = false"></player-modal>
   </div>
 </template>
 <script>

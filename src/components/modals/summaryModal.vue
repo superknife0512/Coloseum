@@ -1,8 +1,8 @@
 
 <template>
-  <v-modal @close="onClose()">
-    <div class="summary">
-      <h3>Summary</h3>
+  <v-modal @close="onClose()" :isActive="isActive">
+    <div class="summary" v-if="isActive">
+      <h3>Correct answer: {{ currentQuestion.correctAns }} </h3>
       <h5> Challenger: <span class="summary__bold">
         {{ summaryInfo.isChallengerCorrect ? 'Correct' : 'Incorrect' }}
          </span>
@@ -22,6 +22,16 @@
       <h5> Helper power: <span class="summary__bold"> {{ helperPower || 'No' }} </span> </h5>
       <hr>
       <h4> Total Point: <span class="summary__bold"> {{ finalScore }} </span> </h4>
+      <h5 v-if="bonusScoreFirstAnswer !== null" class="summary__bonus">
+        Mr/Mrs.
+        <span class="summary__bonus--name">
+          {{ bonusName }},
+        </span>
+         had received
+        <span class="summary__bonus--name">
+          {{ bonusScoreFirstAnswer }}
+        </span>  points as bonus!!
+      </h5>
       <img :src="trumpet" alt="trumpet" class="summary__trumpet--left">
       <img :src="trumpet" alt="trumpet" class="summary__trumpet--right">
     </div>
@@ -33,9 +43,15 @@ import vModal from './modal';
 import trumpet from '../../assets/img/UI/trumpet.png';
 /* eslint-disable max-len */
 export default {
+  props: {
+    isActive: Boolean,
+  },
+
   data() {
     return {
       trumpet,
+      bonusScoreFirstAnswer: null,
+      bonusName: null,
     };
   },
   components: {
@@ -58,6 +74,27 @@ export default {
       }
       this.$store.commit('updateAllPlayer');
       this.updateBackendPlayerScore();
+    },
+
+    bonusScoreCalc() {
+      const { playerAnswers } = { ...this.$store.state };
+      const firstTrueAnswer = playerAnswers.find((ele) => ele.answer === this.currentQuestion.correctAns);
+      const challengerIndex = playerAnswers.findIndex((ele) => ele.username === this.challengerName);
+      const firstTrueAnswerIndex = playerAnswers.findIndex((ele) => ele.username === firstTrueAnswer.username);
+      console.log(challengerIndex, firstTrueAnswerIndex, 77);
+      if (challengerIndex > firstTrueAnswerIndex) {
+        console.log(true);
+        const { score } = this.$store.state;
+        const bonusScore = Math.round(score / 2);
+        this.bonusScoreFirstAnswer = bonusScore;
+        this.bonusName = firstTrueAnswer.username;
+        this.$store.commit('plusScore', {
+          name: firstTrueAnswer.username,
+          score: bonusScore,
+        });
+      } else {
+        this.bonusScoreFirstAnswer = null;
+      }
     },
 
     helperInfo(helperName) {
@@ -137,7 +174,7 @@ export default {
         score: this.finalScore,
       });
       if (this.finalScore > 0) {
-        this.normalPlayers.forEach((ele) => {
+        this.failedPlayers.forEach((ele) => {
           this.$store.commit('minusScore', {
             name: ele.username,
             score: (Math.floor(this.finalScore / (this.summaryInfo.numberOfAnswerFail))),
@@ -173,11 +210,14 @@ export default {
       const challengerAns = playerAnswers.find((ele) => ele.username === challengerName).answer;
       const normalAnswers = playerAnswers.filter((ele) => ele.username !== challengerName);
       const isChallengerCorrect = challengerAns === questionCorrectAns;
-      const numberOfAnswerCorrect = normalAnswers.filter((ele) => ele.answer === questionCorrectAns).length;
+      const answerCorrect = normalAnswers.filter((ele) => ele.answer === questionCorrectAns);
+      const failedAnswer = normalAnswers.filter((ele) => ele.answer !== questionCorrectAns);
       return {
+        failedAnswer,
+        answerCorrect,
         isChallengerCorrect,
-        numberOfAnswerCorrect,
-        numberOfAnswerFail: normalAnswers.length - numberOfAnswerCorrect,
+        numberOfAnswerCorrect: answerCorrect.length,
+        numberOfAnswerFail: normalAnswers.length - answerCorrect.length,
       };
     },
     bottomNormal() {
@@ -185,12 +225,29 @@ export default {
       return sortedNormalPlayer[0];
     },
 
-    normalPlayers() {
-      return this.$store.state.normalPlayer;
+    failedPlayers() {
+      return this.summaryInfo.failedAnswer;
     },
 
     allPlayersData() {
       return this.$store.state.allPlayers;
+    },
+
+    playerAnswers() {
+      return this.$store.state.playerAnswers;
+    },
+
+    currentQuestion() {
+      return this.$store.state.question;
+    },
+  },
+
+  watch: {
+    playerAnswers(val) {
+      console.log(val, 56);
+      if (val.length === this.allPlayersData.length) {
+        this.bonusScoreCalc();
+      }
     },
   },
 };
@@ -205,6 +262,14 @@ export default {
   }
   .summary {
     position: relative;
+    &__bonus {
+      color: rgb(133, 23, 51);
+      &--name {
+        font-size: 1.5rem;
+        color: rgb(197, 22, 81);
+        font-weight: bold;
+      }
+    }
     h3 {
       text-transform: uppercase;
       color: rgb(255, 67, 139);

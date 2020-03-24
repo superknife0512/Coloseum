@@ -2,9 +2,9 @@
   <div>
     <helper-modal
       @onClose="isModalActive = false"
-      v-if="isModalActive"/>
+      :isActive="isModalActive" />
     <summary-modal
-      v-if="isActiveSummary"
+      :isActive="isActiveSummary"
       @onClose="isActiveSummary = false" />
     <br>
     <h3>Battle Field</h3>
@@ -12,8 +12,8 @@
     <player-bar></player-bar>
     <br>
     <section2></section2>
-    <section3></section3>
-    <section4></section4>
+    <section3 ></section3>
+    <section4 ></section4>
     <br><br>
   </div>
 </template>

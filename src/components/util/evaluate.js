@@ -40,8 +40,10 @@ export default (state) => {
   const normalAnswers = state.playerAnswers.filter((ele) => ele.username !== state.challenger.username);
 
   const challengerAnswer = state.playerAnswers.find((ele) => ele.username === state.challenger.username);
+
+  const supportAnswer = state.playerAnswers.find((ele) => ele.username === supportPlayer.username);
   const isChallengerCorrect = challengerAnswer.answer === state.question.correctAns;
-  const isSupportCorrect = supportPlayer.answer === state.question.correctAns;
+  const isSupportCorrect = supportAnswer.answer === state.question.correctAns;
 
   if (!state.helperPower || state.helperPower.name === 'steal') {
     correctNumber += getFalseNumberAndCorrectNumber(state, normalAnswers).correctNumber;

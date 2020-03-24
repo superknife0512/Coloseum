@@ -1,5 +1,5 @@
 <template>
-  <v-modal @close="onClose()">
+  <v-modal @close="onClose()" :isActive="isActive">
     <h4>
       Everyone has submitted their answer, <br>
       Let's see the correct one!
@@ -10,6 +10,9 @@
 import vModal from './modal';
 
 export default {
+  props: {
+    isActive: Boolean,
+  },
   components: {
     vModal,
   },

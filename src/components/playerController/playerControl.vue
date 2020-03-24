@@ -7,6 +7,9 @@
       <div class="user-summary__name">
         {{ currentPlayer.username }}
       </div>
+      <div class="user-summary__old" v-if="oldAnswer !== 0">
+        {{ oldAnswer }}
+      </div>
     </div>
     <hr>
     <div class="user-answer">
@@ -26,6 +29,11 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      oldAnswer: 0,
+    };
+  },
   methods: {
     chooseAnswer(number, color) {
       if (this.canSubmit) {
@@ -37,6 +45,7 @@ export default {
           username: this.currentPlayer.username,
           answer: number,
         });
+        this.oldAnswer = number;
       } else {
         // eslint-disable-next-line no-alert
         alert('You cannot submit this time !!!');
@@ -59,7 +68,7 @@ export default {
     display: flex;
     align-items: center;
     margin-top: .5rem;
-
+    position: relative;
     &__score {
       height: 5rem;
       width: 5rem;
@@ -86,6 +95,14 @@ export default {
       text-transform: uppercase;
       border-top-right-radius: 50px;
       border-bottom-right-radius: 50px;
+    }
+    &__old{
+      position: absolute;
+      top: 1.3rem;
+      right: 1.2rem;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: rgb(187, 187, 187);
     }
   }
 

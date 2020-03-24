@@ -1,23 +1,53 @@
 <template>
-  <div class="modal">
-    <div class="modal__content">
-      <slot>
-        <h3>Some thing here</h3>
-      </slot>
-      <hr>
-      <button class="btn btn-secondary" @click="close()">
-        OK!
-      </button>
-    </div>
-    <div class="modal__backdrop" @click="close()"></div>
+  <div class="modal" :style="{'z-index': zIndex}">
+    <zoom-in-trans>
+      <div class="modal__content" v-if="isActive">
+        <slot>
+          <h3>Some thing here</h3>
+        </slot>
+        <hr>
+        <button class="btn btn-secondary" @click="close()">
+          OK!
+        </button>
+      </div>
+    </zoom-in-trans>
+  <fade-trans>
+    <div class="modal__backdrop" @click="close()" v-if="isActive"></div>
+  </fade-trans>
   </div>
 </template>
 
 <script>
+import zoomInTrans from '../transitions/zoomIn';
+import fadeTrans from '../transitions/fade';
+
 export default {
+  data() {
+    return {
+      zIndex: -1,
+    };
+  },
+  props: {
+    isActive: Boolean,
+  },
   methods: {
     close() {
       this.$emit('close');
+    },
+  },
+  components: {
+    zoomInTrans,
+    fadeTrans,
+  },
+  watch: {
+    isActive(val) {
+      if (val === false) {
+        setTimeout(() => {
+          this.zIndex = '-1';
+        }, 500);
+      } else {
+        this.zIndex = '1400';
+      }
     },
   },
 };
