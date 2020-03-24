@@ -9,14 +9,21 @@
         :score="player.score"
         @changeChallenger="onChangeChallenger($event)" />
       <challenge-player-avatar></challenge-player-avatar>
+      <audio :src="changeChallengerAudio" type="audio/mpeg" ref="changeChallenger"></audio>
     </div>
   </div>
 </template>
 <script>
 import challengePlayerAvatar from './battle/challenger/challengePlayerAvatar';
 import normalPlayerAvatar from './battle/challenger/normalPlayerAvatar';
+import changeChallenger from '../assets/audio/changeChallenger.mp3';
 
 export default {
+  data() {
+    return {
+      changeChallengerAudio: changeChallenger,
+    };
+  },
   components: {
     challengePlayerAvatar,
     normalPlayerAvatar,
@@ -30,6 +37,7 @@ export default {
     onChangeChallenger(playerName) {
       console.log(playerName);
       this.$store.commit('changeChallenger', playerName);
+      this.$refs.changeChallenger.play();
     },
   },
 };

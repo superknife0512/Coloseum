@@ -2,8 +2,8 @@
   <div class="jumbotron">
     <h4>Choose answer time: <h3> {{ time }} </h3></h4>
     <div class="questionChoose">
-      <button class="btn btn-success" @click="setTime('15')"> 15s (bonus 15) </button>
-      <button class="btn btn-primary" @click="setTime('45')"> 45s (bonus 10) </button>
+      <button class="btn btn-success" @click="setTime('20')"> 20s (bonus 15) </button>
+      <button class="btn btn-primary" @click="setTime('50')"> 50s (bonus 10) </button>
       <button class="btn btn-warning" @click="setTime('90')"> 90s (bonus 5) </button>
       <button class="btn btn-danger" @click="setTime('140')"> 140s (bonus 0) </button>
     </div>

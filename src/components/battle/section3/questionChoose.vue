@@ -14,17 +14,26 @@
       <button class="btn btn-danger" @click="setLevel('death')"
               :disabled="questionLimit.death === 0"> Death Match (40 points)</button>
     </div>
+    <audio :src="choosingAudio" type="audio/mpeg" ref="choosingAudio"></audio>
   </div>
 </template>
 
 <script>
+import choosingAudio from '../../../assets/audio/chooseLevel.mp3';
+
 export default {
+  data() {
+    return {
+      choosingAudio,
+    };
+  },
   props: {
     level: String,
   },
   methods: {
     setLevel(level) {
       this.$emit('setQuestion', level);
+      this.$refs.choosingAudio.play();
     },
   },
   computed: {
