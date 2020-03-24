@@ -83,6 +83,12 @@ export default {
     socket() {
       return this.$store.state.socket;
     },
+    numberOfAnswers() {
+      return this.$store.state.playerAnswers.length;
+    },
+    numberOfPlayers() {
+      return this.$store.state.allPlayers.length;
+    },
   },
   watch: {
     remainingTime(val) {
@@ -90,7 +96,9 @@ export default {
         clearInterval(this.interval);
         this.$emit('end');
         this.apiCallChangeQuestionState('end');
-        this.callTimeUpAPI();
+        if (this.numberOfAnswers < this.numberOfPlayers) {
+          this.callTimeUpAPI();
+        }
       }
     },
     isStart(val) {

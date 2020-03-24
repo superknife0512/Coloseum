@@ -63,7 +63,10 @@ export default {
         }
       }
       this.power[helperName].isOn = true;
-      this.$store.commit('setHelper', { point: this.power[helperName].point, name: helperName });
+      this.$store.commit('setHelper', {
+        point: this.power[helperName].point,
+        name: helperName,
+      });
     },
   },
   computed: {

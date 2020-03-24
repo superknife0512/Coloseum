@@ -12,8 +12,10 @@
     <player-bar></player-bar>
     <br>
     <section2></section2>
-    <section3 ></section3>
-    <section4 ></section4>
+    <slide-trans>
+      <section3 v-if="!question"></section3>
+      <section4 v-else></section4>
+    </slide-trans>
     <br><br>
   </div>
 </template>
@@ -24,6 +26,7 @@ import section3 from '../components/section3.vue';
 import section4 from '../components/section4.vue';
 import helperModal from '../components/modals/helperModal';
 import summaryModal from '../components/modals/summaryModal';
+import slideTrans from '../components/transitions/slide';
 
 export default {
   created() {
@@ -45,6 +48,9 @@ export default {
     socket() {
       return this.$store.state.socket;
     },
+    question() {
+      return this.$store.state.question;
+    },
   },
 
   watch: {
@@ -62,6 +68,7 @@ export default {
     section4,
     helperModal,
     summaryModal,
+    slideTrans,
   },
 };
 </script>

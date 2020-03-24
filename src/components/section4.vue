@@ -1,31 +1,29 @@
 <template>
-  <slide-trans>
-    <div class="mt-4" v-if="question">
-      <h4> Let's begin your battle: </h4>
-      <div class="section-4 jumbotron">
-        <v-summary @start="onStart"
-                  :isStart="isStart"
-                  @stop="onStop" />
-        <hr>
-        <v-content
-          :isStart="isStart"
-          :blockBegin="blockBegin"
-          :blockEnd="blockEnd" />
-        <hr>
-        <v-time :time="parseInt(time)"
+  <div class="mt-4">
+    <h4> Let's begin your battle: </h4>
+    <div class="section-4 jumbotron">
+      <v-summary @start="onStart"
                 :isStart="isStart"
-                @end="onFinal()"
-                @start="onStart()"/>
-      </div>
+                @stop="onStop" />
+      <hr>
+      <v-content
+        :isStart="isStart"
+        :blockBegin="blockBegin"
+        :blockEnd="blockEnd" />
+      <hr>
+      <v-time :time="parseInt(time)"
+              :isStart="isStart"
+              @end="onFinal()"
+              @start="onStart()"/>
     </div>
-  </slide-trans>
+  </div>
 </template>
 
 <script>
 import vSummary from './battle/section4/summary';
 import vContent from './battle/section4/content';
 import vTime from './battle/section4/time';
-import slideTrans from './transitions/slide';
+// import slideTrans from './transitions/slide';
 
 export default {
   data() {
@@ -51,7 +49,7 @@ export default {
     vSummary,
     vContent,
     vTime,
-    slideTrans,
+    // slideTrans,
   },
   watch: {
     question(val) {

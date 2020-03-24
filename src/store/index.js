@@ -95,6 +95,10 @@ export default new Vuex.Store({
     },
 
     setHelper(state, payload) {
+      if (state.helperPower !== null && state.helperPower.name === payload.name) {
+        state.helperPower = null;
+        return;
+      }
       state.helperPower = payload;
     },
 

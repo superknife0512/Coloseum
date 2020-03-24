@@ -1,26 +1,24 @@
 <template>
-  <slide-trans>
-    <div class="section-3" v-if="!question">
-      <div class="d-flex mb-2">
-        <h4>Setup</h4>
-        <button
-          class="btn btn-secondary ml-2"
-          :disabled="time === null ||questionLevel === null"
-          @click="chooseQuestion()">
-          Start question
-        </button>
-      </div>
-      <question-choose @setQuestion="questionLevel = $event"
-                       :level="questionLevel"></question-choose>
-      <time-choose @setTime="time = $event" :time="time"></time-choose>
+  <div class="section-3">
+    <div class="d-flex mb-2">
+      <h4>Setup</h4>
+      <button
+        class="btn btn-secondary ml-2"
+        :disabled="time === null ||questionLevel === null"
+        @click="chooseQuestion()">
+        Start question
+      </button>
     </div>
-  </slide-trans>
+    <question-choose @setQuestion="questionLevel = $event"
+                      :level="questionLevel"></question-choose>
+    <time-choose @setTime="time = $event" :time="time"></time-choose>
+  </div>
 </template>
 
 <script>
 import questionChoose from './battle/section3/questionChoose';
 import timeChoose from './battle/section3/timeChoose';
-import slideTrans from './transitions/slide';
+// import slideTrans from './transitions/slide';
 
 export default {
   data() {
@@ -32,7 +30,7 @@ export default {
   components: {
     questionChoose,
     timeChoose,
-    slideTrans,
+    // slideTrans,
   },
   methods: {
     chooseQuestion() {
