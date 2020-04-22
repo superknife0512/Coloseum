@@ -4,11 +4,17 @@
           :class="{'helper__active': helperPower.isOn}">
     <img :src="helperImg" :alt="helperImg">
     <h5> -{{ helperPower.point }} </h5>
+    <audio :src="musicChoice" ref="audioControl"></audio>
   </figure>
 </template>
 
 <script>
 import imgChoose from '../../util/imgChoose';
+
+import coin from '../../../assets/audio/coin.mp3';
+import shield from '../../../assets/audio/shield.mp3';
+import support from '../../../assets/audio/support.mp3';
+import swordChain from '../../../assets/audio/sword-chain.mp3';
 
 export default {
   props: {
@@ -17,16 +23,39 @@ export default {
   },
   data() {
     return {
-      // isChoose: false,
+      // nothing
     };
   },
   computed: {
     helperImg() {
       return imgChoose.helperImgChoose(this.img);
     },
+    musicChoice() {
+      let audio;
+      switch (this.img) {
+        case 'link':
+          audio = swordChain;
+          break;
+        case 'shield':
+          audio = shield;
+          break;
+        case 'steal':
+          audio = coin;
+          break;
+        case 'support':
+          audio = support;
+          break;
+        default:
+          audio = shield;
+          break;
+      }
+      return audio;
+    },
   },
   methods: {
     chooseHelper() {
+      this.$refs.audioControl.volume = 0.3;
+      this.$refs.audioControl.play();
       this.$emit('chooseHelper');
     },
   },

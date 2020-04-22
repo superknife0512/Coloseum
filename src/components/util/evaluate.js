@@ -13,7 +13,6 @@ function levelToNumber(level) {
 }
 
 function getFalseNumberAndCorrectNumber(state, listOfAnswers) {
-  console.log('List of answer', listOfAnswers);
   const falseAnswers = listOfAnswers.filter((ele) => ele.answer !== state.question.correctAns);
   const correctAnswers = listOfAnswers.filter((ele) => ele.answer === state.question.correctAns);
   return {
@@ -61,7 +60,7 @@ export default (state) => {
     state.finalScore = -challengerPower.shield;
     challengerPower.shield += 8;
   } else if (state.helperPower.name === 'link') { // inferno chain
-    const normalAnswerWithoutBlockedPlayer = state.normalPlayer.filter((ele) => ele.username !== blockedPlayer.username);
+    const normalAnswerWithoutBlockedPlayer = normalAnswers.filter((ele) => ele.username !== blockedPlayer.username);
     correctNumber += getFalseNumberAndCorrectNumber(state, normalAnswerWithoutBlockedPlayer).correctNumber;
     falseNumber += getFalseNumberAndCorrectNumber(state, normalAnswerWithoutBlockedPlayer).falseNumber;
     if (isChallengerCorrect) {
@@ -71,7 +70,8 @@ export default (state) => {
     }
     challengerPower.link += 5;
   } else if (state.helperPower.name === 'support') {
-    const normalAnswerWithoutSupportPlayer = state.normalPlayer.filter((ele) => ele.username !== supportPlayer.username);
+    const normalAnswerWithoutSupportPlayer = normalAnswers.filter((ele) => ele.username !== supportPlayer.username);
+    console.log('74', normalAnswerWithoutSupportPlayer);
     correctNumber += getFalseNumberAndCorrectNumber(state, normalAnswerWithoutSupportPlayer).correctNumber;
     falseNumber += getFalseNumberAndCorrectNumber(state, normalAnswerWithoutSupportPlayer).falseNumber;
     if (isSupportCorrect || isChallengerCorrect) {

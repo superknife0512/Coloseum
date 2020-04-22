@@ -46,12 +46,12 @@ export default {
   props: {
     isActive: Boolean,
   },
-
   data() {
     return {
       trumpet,
       bonusScoreFirstAnswer: null,
       bonusName: null,
+      blockedPlayerAction: null,
     };
   },
   components: {
@@ -77,15 +77,18 @@ export default {
     },
 
     bonusScoreCalc() {
+      const helperPowerName = this.$store.state.helperPower?.name;
       const { playerAnswers } = { ...this.$store.state };
       const firstTrueAnswer = playerAnswers.find((ele) => ele.answer === this.currentQuestion.correctAns);
       const challengerIndex = playerAnswers.findIndex((ele) => ele.username === this.challengerName);
       const firstTrueAnswerIndex = playerAnswers.findIndex((ele) => ele.username === firstTrueAnswer.username);
-      console.log(challengerIndex, firstTrueAnswerIndex, 77);
       if (challengerIndex > firstTrueAnswerIndex) {
         console.log(true);
         const { score } = this.$store.state;
-        const bonusScore = Math.round(score / 2);
+        let bonusScore = Math.round(score / 2);
+        if (helperPowerName === 'link' && this.blockedPlayer.username === firstTrueAnswer.username) {
+          bonusScore = Math.round(score / 4);
+        }
         this.bonusScoreFirstAnswer = bonusScore;
         this.bonusName = firstTrueAnswer.username;
         this.$store.commit('plusScore', {
@@ -109,7 +112,7 @@ export default {
         case 'link':
           infoObj = {
             explain: 'Block the highest rank player from submit answer or the second one if you are currently the top rank.',
-            title: 'Inferno Chain',
+            title: 'Blocked Sword',
           };
           break;
         case 'support':
@@ -121,7 +124,7 @@ export default {
         default:
           infoObj = {
             explain: 'Steal the score from who submits the wrong answer in your turn.',
-            title: 'Hands of Midas',
+            title: 'The Bless of Devil',
           };
       }
       return infoObj;
@@ -149,7 +152,6 @@ export default {
         score: this.finalScore,
       });
     },
-
     chainHelper() {
       this.$store.commit('plusScore', {
         name: this.challengerName,
@@ -239,6 +241,11 @@ export default {
 
     currentQuestion() {
       return this.$store.state.question;
+    },
+    blockedPlayer() {
+      const normalPlayer = [...this.$store.state.normalPlayer];
+      const sortedPlayer = normalPlayer.sort((a, b) => a.score - b.score > 0);
+      return sortedPlayer[0];
     },
   },
 

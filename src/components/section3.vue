@@ -52,11 +52,11 @@ export default {
     },
     bonusTimeCal() {
       switch (this.time) {
-        case '15':
+        case '25':
           return 15;
-        case '45':
+        case '60':
           return 10;
-        case '90':
+        case '100':
           return 5;
         default:
           return 0;

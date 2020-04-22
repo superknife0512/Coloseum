@@ -2,7 +2,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import io from 'socket.io-client';
-import questionData from '../components/data/questions';
+import questionData from '../components/data/questionReal';
 import evaluate from '../components/util/evaluate';
 
 Vue.use(Vuex);
@@ -15,7 +15,7 @@ export default new Vuex.Store({
     normalPlayer: [],
     challenger: null,
     rank: 1,
-    helperPower: null,
+    helperPower: null, // name point
 
     allQuestions: questionData,
     question: null, // question, time

@@ -60,7 +60,7 @@ export default {
         case 'link':
           infoObj = {
             explain: 'Block the highest rank player from submit answer or the second one if you are currently the top rank.',
-            title: 'Inferno Chain',
+            title: 'Blocked Sword',
           };
           break;
         case 'support':
@@ -72,7 +72,7 @@ export default {
         default:
           infoObj = {
             explain: 'Steal the score from who submits the wrong answer in your turn.',
-            title: 'Hands of Midas',
+            title: 'The Bless of Devil',
           };
       }
       return infoObj;

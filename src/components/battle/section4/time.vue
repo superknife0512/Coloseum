@@ -13,10 +13,12 @@
         aria-valuemax="100" :style="`width: ${percent}%`">
       </div>
     </div>
+    <audio :src="endingAudio" ref="audioController"></audio>
   </div>
 </template>
 <script>
 import busEvent from '../../util/bus';
+import endingAudio from '../../../assets/audio/ending.mp3';
 
 export default {
   created() {
@@ -38,6 +40,7 @@ export default {
     return {
       remainingTime: this.time,
       interval: null,
+      endingAudio,
     };
   },
   methods: {
@@ -96,6 +99,7 @@ export default {
         clearInterval(this.interval);
         this.$emit('end');
         this.apiCallChangeQuestionState('end');
+        this.$refs.audioController.play();
         if (this.numberOfAnswers < this.numberOfPlayers) {
           this.callTimeUpAPI();
         }

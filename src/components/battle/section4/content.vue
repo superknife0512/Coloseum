@@ -1,7 +1,7 @@
 <template>
   <div class="question">
     <div class="question__content mb-4">
-      <h5 v-show="!isBlock">{{ question.content }} ?</h5>
+      <div v-show="!isBlock" v-html="question.content">?</div>
     </div>
     <div class="alert alert-light question__answer" role="alert">
       <h5 v-for="(ans, i) in question.answers" :key="i">
@@ -35,6 +35,9 @@ export default {
     h5{
       color: rgb(0, 67, 129);
       font-size: 1.4rem;
+    }
+    img {
+      height: 5rem !important;
     }
   }
   &__answer{
