@@ -6,7 +6,7 @@ import store from './store';
 Vue.config.productionTip = false;
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3000/api/',
+  baseURL: 'http://178.128.31.202:1205/api/',
   timeout: 5000,
 });
 
